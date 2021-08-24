@@ -1,0 +1,4 @@
+{
+  "image": "h2oaml",
+  "entry_point": "python run.py"
+}

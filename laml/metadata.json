@@ -1,0 +1,4 @@
+{
+  "image": "maloyan/laml_docker",
+  "entry_point": "python3 run.py"
+}
