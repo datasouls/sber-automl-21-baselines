@@ -10,22 +10,19 @@ from lightautoml.tasks import Task
 def main():
     task_type, train_data, test_data, output_path = sys.argv[1:]
 
-    ## run model for carbon monoxide
     train = pd.read_csv(train_data)
     test = pd.read_csv(test_data)
+    target_col = list(set(train.columns) - set(test.columns))[0]
 
     laml = TabularAutoML(task=Task(task_type), timeout=10)
-    if task_type == "binary":
-        laml.fit_predict(train_data=train, roles={"target": "DEATH_EVENT"})
+    laml.fit_predict(train_data=train, roles={"target": target_col})
+    predict = laml.predict(test)
 
-        predict = laml.predict(test)
-        predict = pd.DataFrame({"DEATH_EVENT": predict.data.ravel()})
+    if task_type in ["binary", "reg"]:
+        predict = pd.DataFrame({target_col: predict.data.ravel()})
 
     elif task_type == "multiclass":
-        laml.fit_predict(train_data=train, roles={"target": "Species"})
-
-        predict = laml.predict(test)
-        predict = pd.DataFrame({"Species": np.argmax(predict.data, axis=1)})
+        predict = pd.DataFrame({target_col: np.argmax(predict.data, axis=1)})
 
     predict.to_csv(output_path, index=None)
 
