@@ -22,7 +22,7 @@ def main():
         predict = pd.DataFrame({target_col: predict.data.ravel()})
 
     elif task_type == "multiclass":
-        predict = pd.DataFrame({target_col: np.argmax(predict.data, axis=1)})
+        predict = pd.DataFrame(predict.data)
 
     predict.to_csv(output_path, index=None)
 
