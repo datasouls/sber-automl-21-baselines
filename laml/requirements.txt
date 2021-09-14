@@ -1,2 +1,2 @@
- lightautoml
- pandas
+ lightautoml==0.2.16
+ pandas==1.3.3
