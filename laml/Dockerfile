@@ -23,3 +23,5 @@ COPY --from=builder /install /usr/local
 WORKDIR /workspace
 
 COPY . /workspace/
+
+CMD ["bash"]
