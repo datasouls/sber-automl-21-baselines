@@ -24,4 +24,4 @@ WORKDIR /workspace
 
 COPY . /workspace/
 
-CMD ["bash"]
+ENTRYPOINT ["/bin/bash"]
