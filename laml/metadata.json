@@ -1,4 +1,4 @@
 {
-  "image": "maloyan/laml_docker",
-  "entry_point": "python3 run.py"
+  "image": "registry.datasouls.com/laml:0.0.5",
+  "entry_point": "python run.py"
 }
