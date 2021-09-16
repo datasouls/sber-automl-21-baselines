@@ -24,8 +24,6 @@ RUN pip install distributed==2.10.0 && \
     apt-get install -y default-jre-headless && \
     pip install -f https://h2o-release.s3.amazonaws.com/h2o/latest_stable_Py.html h2o
 
-COPY . /workspace/
-
 WORKDIR /workspace
 
-ENTRYPOINT ["/bin/bash"]
+#ENTRYPOINT ["/bin/bash"]
