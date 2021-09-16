@@ -1,81 +1,31 @@
-# Build an image that can do training and inference in SageMaker using
-# H2o's automatic machine learning (AutoML)
-# http://h2o-release.s3.amazonaws.com/h2o/rel-wheeler/2/docs-website/h2o-docs/automl.html
-#
-# Dockerfile template adapted from
-# https://github.com/awslabs/amazon-sagemaker-examples/blob/master/advanced_functionality/scikit_bring_your_own/container/Dockerfile
+FROM python:3.8.12-buster as base
 
-FROM ubuntu:18.04
+LABEL PROJECT="Datasouls Competition: H2O"
 
-RUN apt-get -y update && apt-get -y upgrade && \
-    apt-get -y --no-install-recommends install \
-        wget \
-        curl \
-        unzip \
-        apt-utils \
-        software-properties-common \
-        openjdk-8-jdk \
-        net-tools \
-        nginx \
-        ca-certificates \
-        build-essential
+#RUN mkdir -p /opt/automl
 
-RUN \
-  echo 'DPkg::Post-Invoke {"/bin/rm -f /var/cache/apt/archives/*.deb || true";};' | tee /etc/apt/apt.conf.d/no-cache && \
-  echo "deb http://mirror.math.princeton.edu/pub/ubuntu xenial main universe" >> /etc/apt/sources.list && \
-  apt-get update -q -y && \
-  apt-get dist-upgrade -y && \
-  apt-get clean && \
-  rm -rf /var/cache/apt/* && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y wget unzip python-pip python-sklearn python-pandas python-numpy python-matplotlib software-properties-common python-software-properties && \
-  add-apt-repository -y ppa:webupd8team/java && \
-  apt-get update -q && \
-  echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
-  echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
-  DEBIAN_FRONTEND=noninteractive apt-get install -y oracle-java8-installer && \
-  apt-get clean
+#WORKDIR /opt/automl
 
-RUN apt-get -y install \
-      python3-setuptools \
-      python3-pip \
-      gdebi \
-      python3-pandas \
-      python3-numpy \
-      python3-matplotlib \
-      libxml2-dev \
-      libssl-dev \
-      libcurl4-openssl-dev \
-      libgtk2.0-0 \
-      iputils-ping
+# Uncomment the following COPY line and the corresponding lines in the `RUN` command if you wish to
+# include your requirements in the image itself. It is suggested that you only do this if your
+# requirements rarely (if ever) change.
+COPY requirements.txt .
+#COPY model.py .
 
-RUN wget http://h2o-release.s3.amazonaws.com/h2o/latest_stable -O latest && \
-    wget --no-check-certificate -i latest -O /opt/h2o-latest.zip && \
-    unzip -d /opt /opt/h2o-latest.zip && \
-    rm /opt/h2o-latest.zip && \
-    cd /opt && \
-    mkdir program && \
-    cd `find . -name 'h2o.jar' | sed 's/.\///;s/\/h2o.jar//g'` && \
-    cp h2o.jar /opt/program && \
-    touch /opt/program/flatfile.txt
+# Configure apt and install packages
+RUN apt-get update && apt-get install -y \
+    && apt-get -y install git iproute2 procps lsb-release
+RUN pip --no-cache-dir install -r requirements.txt
+RUN pip install distributed==2.10.0 && \
+    pip install seaborn python-dateutil dask && \
+    pip install pyyaml joblib pytagcloud husl geopy ml_metrics mne pyshp && \
+    # Install h2o from source.
+    # Use `conda install -c h2oai h2o` once Python 3.7 version is released to conda.
+    apt-get install -y default-jre-headless && \
+    pip install -f https://h2o-release.s3.amazonaws.com/h2o/latest_stable_Py.html h2o
 
-RUN /usr/bin/pip3 install --upgrade --force-reinstall pip==9.0.3 && \
-    /usr/bin/pip3 install numpy scipy scikit-learn pandas flask gevent gunicorn requests tabulate colorama future && \
-    /usr/bin/pip3 install -f http://h2o-release.s3.amazonaws.com/h2o/latest_stable_Py.html h2o --user
+COPY . /workspace/
 
-# Set some environment variables. PYTHONUNBUFFERED keeps Python from buffering our standard
-# output stream, which means that logs can be delivered to the user quickly. PYTHONDONTWRITEBYTECODE
-# keeps Python from writing the .pyc files which are unnecessary in this case. We also update
-# PATH so that the train and serve programs are found when the container is invoked.
+WORKDIR /workspace
 
-ENV PYTHONUNBUFFERED=TRUE
-ENV PYTHONDONTWRITEBYTECODE=TRUE
-ENV PATH="/opt/program:${PATH}"
-
-# Set up the program in the image
-COPY automl_scripts /opt/program
-RUN chmod +x /opt/program/startup_h2o_cluster.sh
-COPY hyperparameters.json /opt/program/hyperparameters.json
-WORKDIR /opt/program
-
-RUN ld -v
-RUN ldd --version
+ENTRYPOINT ["/bin/bash"]
