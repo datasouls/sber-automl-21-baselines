@@ -1,0 +1,4 @@
+{
+  "image": "registry.datasouls.com/autogluon:0.0.1",
+  "entry_point": "python run.py"
+}

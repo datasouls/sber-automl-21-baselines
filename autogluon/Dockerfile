@@ -1,6 +1,6 @@
 FROM python:3.8.12-buster as base
 
-LABEL PROJECT="Datasouls Competition: LAML"
+LABEL PROJECT="Datasouls Competition: AutoGluon"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   ffmpeg \
@@ -22,4 +22,4 @@ FROM base
 COPY --from=builder /install /usr/local
 WORKDIR /workspace
 
-ENTRYPOINT ["/bin/bash"]
+#ENTRYPOINT ["/bin/bash"]
