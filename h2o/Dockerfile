@@ -1,3 +1,4 @@
+
 FROM python:3.8.12-buster as base
 
 LABEL PROJECT="Datasouls Competition: H2O"
@@ -26,4 +27,4 @@ RUN pip install distributed==2.10.0 && \
 
 WORKDIR /workspace
 
-ENTRYPOINT ["/bin/bash"]
+#ENTRYPOINT ["/bin/bash"]
