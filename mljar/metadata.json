@@ -1,0 +1,4 @@
+{
+  "image": "registry.datasouls.com/mljar:0.0.1",
+  "entry_point": "python run.py"
+}
