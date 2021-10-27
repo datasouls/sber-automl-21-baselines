@@ -1,4 +1,4 @@
 {
-  "image": "registry.datasouls.com/h2o:0.0.1",
+  "image": "registry.datasouls.com/h2o:0.0.3",
   "entry_point": "python run.py"
 }

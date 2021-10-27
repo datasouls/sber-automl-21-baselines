@@ -33,8 +33,10 @@ def main():
     )
 
     preds_h2oaml = h2oaml.leader.predict(h2o_test)
-    if task_type in ["binary", "multiclass"]:
-        preds_h2oaml[[i for i in preds_h2oaml.columns if i != 'predict']]
+    if task_type == "binary":
+        preds_h2oaml = preds_h2oaml["p1"]
+    elif task_type == "multiclass":
+        preds_h2oaml = preds_h2oaml[[i for i in preds_h2oaml.columns if i != 'predict']]
     preds_h2oaml.as_data_frame().to_csv(output_path, index=None)
 
 
