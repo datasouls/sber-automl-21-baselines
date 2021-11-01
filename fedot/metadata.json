@@ -1,4 +1,4 @@
 {
-  "image": "registry.datasouls.com/fedot:0.4.1",
+  "image": "registry.datasouls.com/fedot:0.0.1",
   "entry_point": "python run.py"
 }
