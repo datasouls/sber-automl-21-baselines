@@ -3,7 +3,7 @@ import sys
 
 import numpy as np
 import pandas as pd
-from lightautoml.automl.presets.tabular_presets import TabularAutoML
+from lightautoml.automl.presets.tabular_presets import TabularUtilizedAutoML
 from lightautoml.tasks import Task
 
 
@@ -14,7 +14,7 @@ def main():
     test = pd.read_csv(test_data)
     target_col = list(set(train.columns) - set(test.columns))[0]
 
-    laml = TabularAutoML(task=Task(task_type), timeout=10)
+    laml = TabularUtilizedAutoML(task=Task(task_type), timeout=3600)
     laml.fit_predict(train_data=train, roles={"target": target_col})
     predict = laml.predict(test)
 
