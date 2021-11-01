@@ -12,7 +12,7 @@ def main():
     target_col = list(set(train.columns) - set(test.columns))[0]
     target = train.pop(target_col)
 
-    model = AutoML(total_time_limit=30)
+    model = AutoML(total_time_limit=3600, mode="Compete"))
     model.fit(train, target)
 
     y_pred = model.predict_proba(test)
