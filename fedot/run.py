@@ -36,12 +36,4 @@ def main():
 
 
 if __name__ == "__main__":
-    datasets = ['dresses-sales', 'internet-advertisements', 'eucalyptus', 'bioresponse']
-    types = ['binary', 'binary', 'multiclass', 'binary']
-    for i, dataset in enumerate(datasets):
-        sys.argv = ['',
-                    f'{types[i]}',
-                    f'C:\\Users\\Nikolay\\Downloads\\datasest_to_tests\\{dataset}\\train\\train.csv',
-                    f'C:\\Users\\Nikolay\\Downloads\\datasest_to_tests\\{dataset}\\train\\test.csv',
-                    f'D:\\res\\out{i}.csv']
-        main()
+    main()
