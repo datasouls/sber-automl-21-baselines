@@ -1,4 +1,4 @@
 {
-  "image": "registry.datasouls.com/laml:0.0.5",
+  "image": "registry.datasouls.com/laml:0.0.6",
   "entry_point": "python run.py"
 }
