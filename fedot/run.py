@@ -8,7 +8,7 @@ from fedot.api.main import Fedot
 def main():
     task_type, train_data, test_data, output_path = sys.argv[1:]
 
-    timeout = 1
+    timeout = 3600
 
     train = pd.read_csv(train_data)
     test = pd.read_csv(test_data)
