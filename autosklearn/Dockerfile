@@ -19,3 +19,4 @@ FROM base
 
 COPY --from=builder /install /usr/local
 WORKDIR /workspace
+COPY . .
