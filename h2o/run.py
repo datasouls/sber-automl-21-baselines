@@ -20,7 +20,7 @@ def main():
     target = list(set(h2o_train.columns) - set(h2o_test.columns))[0]
 
     h2oaml = H2OAutoML(
-        max_runtime_secs=10,
+        max_runtime_secs=3600,
     )
 
     if task_type in ["binary", "multiclass"]:

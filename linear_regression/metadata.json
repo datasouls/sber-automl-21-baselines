@@ -1,4 +1,4 @@
 {
-  "image": "maloyan/linear_docker",
-  "entry_point": "python3 run.py"
+  "image": "registry.datasouls.com/linear:0.0.1",
+  "entry_point": "python run.py"
 }

@@ -1,6 +1,6 @@
 FROM python:3.8.12-buster as base
 
-LABEL PROJECT="Datasouls Competition: LAML"
+LABEL PROJECT="Datasouls Competition: FLAML"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   ffmpeg \
@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       apt-get clean
 
 FROM base as builder
+
+WORKDIR /builds
 
 WORKDIR /builds
 COPY requirements.txt /requirements.txt
