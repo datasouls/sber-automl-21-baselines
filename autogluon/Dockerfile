@@ -16,6 +16,7 @@ COPY requirements.txt /requirements.txt
 RUN pip install --upgrade --prefix=/install -r /requirements.txt
 
 FROM base
+WORKDIR /workspace
 
 COPY --from=builder /install /usr/local
-WORKDIR /workspace
+COPY run.py .
