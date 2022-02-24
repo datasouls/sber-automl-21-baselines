@@ -1,4 +1,4 @@
-FROM python:3.8.12-buster as base
+FROM python:3.8.12-buster
 
 LABEL PROJECT="Datasouls Competition: AutoGluon"
 
@@ -9,9 +9,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* &&\
       apt-get clean
 
-FROM base as builder
+WORKDIR /app
 
 COPY . .
-RUN pip install --upgrade --prefix=/usr/local -r /requirements.txt
+RUN pip install --upgrade --prefix=/usr/local -r ./requirements.txt
 
-WORKDIR /app
