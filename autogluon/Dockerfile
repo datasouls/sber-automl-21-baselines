@@ -13,7 +13,7 @@ FROM base as builder
 
 WORKDIR /builds
 COPY requirements.txt /requirements.txt
-RUN pip install --prefix=/install -r /requirements.txt
+RUN pip install --upgrade --prefix=/install -r /requirements.txt
 
 FROM base
 
