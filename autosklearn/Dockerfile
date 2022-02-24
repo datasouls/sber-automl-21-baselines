@@ -21,4 +21,4 @@ COPY --from=builder /install /usr/local
 WORKDIR /workspace
 COPY . .
 
-ENTRYPOINT [ "/bin/bash" ]
+ENTRYPOINT []
