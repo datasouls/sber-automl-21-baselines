@@ -13,7 +13,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       BASELINE: "fedot"
       REGISTRY_NAME: "registry.datasouls.com"
-      TAG: "latest"
+      TAG: "0.0.1"
     steps:
       - name: clean up workdir
         run: |
@@ -27,7 +27,7 @@ jobs:
         run: |
           cd ./${BASELINE} &&\
           docker build -t ${REGISTRY_NAME}/${BASELINE}:${TAG} . -f Dockerfile &&\
-          docker tag ${REGISTRY_NAME}/${BASELINE}:${TAG} r${REGISTRY_NAME}/${BASELINE}:latest
+          docker tag ${REGISTRY_NAME}/${BASELINE}:${TAG} ${REGISTRY_NAME}/${BASELINE}:latest
 
       - name: Login to Datasouls Registry
         id: login_to_datasouls_registry
@@ -41,6 +41,7 @@ jobs:
         id: push_images
         run: |
           docker push ${REGISTRY_NAME}/${BASELINE}:${TAG}
+          docker push ${REGISTRY_NAME}/${BASELINE}:latest
 
       - name: notify slack
         uses: act10ns/slack@v1
