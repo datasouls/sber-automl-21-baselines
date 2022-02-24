@@ -1,6 +1,6 @@
-FROM python:3.8.12-buster
+FROM python:3.8.12-buster as base
 
-LABEL PROJECT="Datasouls Competition: AutoGluon"
+LABEL PROJECT="Datasouls Competition: LAML"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   ffmpeg \
@@ -9,8 +9,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* &&\
       apt-get clean
 
-WORKDIR /app
+FROM base as builder
 
-COPY . .
-RUN pip install --upgrade --prefix=/usr/local -r ./requirements.txt
+WORKDIR /builds
+COPY requirements.txt /requirements.txt
+RUN pip install --prefix=/install -r /requirements.txt
 
+FROM base
+
+COPY --from=builder /install /usr/local
+WORKDIR /workspace
