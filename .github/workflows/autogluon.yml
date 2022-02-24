@@ -37,13 +37,7 @@ jobs:
           docker build -t ${REGISTRY_NAME}/${BASELINE}:${TAG} . -f Dockerfile &&\
           docker tag ${REGISTRY_NAME}/${BASELINE}:${TAG} r${REGISTRY_NAME}/${BASELINE}:latest
 
-      - name: Login to Datasouls Registry
-        id: login_to_datasouls_registry
-        uses: docker/login-action@v1
-        with:
-          registry: registry.datasouls.com/${BASELINE}
-          username: ${{ secrets.REGISTRY_PUSH_USERNAME }}
-          password: ${{ secrets.REGISTRY_PUSH_PASSWORD }}
+
 
       - name: Push Images
         id: push_images
