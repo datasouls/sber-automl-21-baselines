@@ -11,12 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 FROM base as builder
 
-WORKDIR /builds
-COPY requirements.txt /requirements.txt
-RUN pip install --upgrade --prefix=/install -r /requirements.txt
+COPY . .
+RUN pip install --upgrade --prefix=/usr/local -r /requirements.txt
 
-FROM base
-WORKDIR /workspace
-
-COPY --from=builder /install /usr/local
-COPY run.py .
+WORKDIR /app
