@@ -40,7 +40,8 @@ jobs:
       - name: Push Images
         id: push_images
         run: |
-          docker push ${REGISTRY_NAME}/${BASELINE}
+          docker push ${REGISTRY_NAME}/${BASELINE}:${TAG}
+          docker push ${REGISTRY_NAME}/${BASELINE}:latest
 
       - name: notify slack
         uses: act10ns/slack@v1
