@@ -24,7 +24,7 @@ jobs:
 
       - name: build image
         id: build_image
-        working-directory: "./runners/runner-generic"
+        working-directory: "./${BASELINE}"
         run: |
           docker build -t ${REGISTRY_NAME}/${BASELINE}:${TAG} . -f Dockerfile
           docker tag ${REGISTRY_NAME}/${BASELINE}:${TAG} r${REGISTRY_NAME}/${BASELINE}:latest
