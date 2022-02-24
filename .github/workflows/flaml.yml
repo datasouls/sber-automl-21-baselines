@@ -1,17 +1,17 @@
-name: "Build Baseline Image: Autogluon"
+name: "Build Baseline Image: flaml"
 
 on:
   workflow_dispatch:
   push:
     branches: [ master ]
     paths:
-      - autogluon/**
+      - flaml/**
 jobs:
   build:
     runs-on: [ self-hosted, yandex, sber-automl-21-baselines ]
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      BASELINE: "autogluon"
+      BASELINE: "flaml"
       REGISTRY_NAME: "registry.datasouls.com"
       TAG: "latest"
     steps:
