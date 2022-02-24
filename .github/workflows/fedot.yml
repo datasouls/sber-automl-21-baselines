@@ -13,7 +13,7 @@ jobs:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       BASELINE: "fedot"
       REGISTRY_NAME: "registry.datasouls.com"
-      TAG: "0.0.1"
+      TAG: "0.0.2"
     steps:
       - name: clean up workdir
         run: |
