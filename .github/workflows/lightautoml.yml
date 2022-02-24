@@ -25,7 +25,7 @@ jobs:
       - name: build image
         id: build_image
         run: |
-          cd ./${BASELINE} &&\
+          cd ./lightautoml &&\
           docker build -t ${REGISTRY_NAME}/${BASELINE}:${TAG} . -f Dockerfile &&\
           docker tag ${REGISTRY_NAME}/${BASELINE}:${TAG} ${REGISTRY_NAME}/${BASELINE}:latest
 
