@@ -15,8 +15,8 @@ FROM base as builder
 
 WORKDIR /builds
 COPY requirements.txt /requirements.txt
-RUN python -m pip install --upgrade pip setuptools
-RUN pip install --prefix=/install -r /requirements.txt
+RUN python3 -m pip install --upgrade pip setuptools
+RUN python3 -m pip install --prefix=/install -r /requirements.txt
 
 FROM base
 
