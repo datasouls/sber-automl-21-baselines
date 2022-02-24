@@ -20,4 +20,5 @@ FROM base
 COPY --from=builder /install /usr/local
 WORKDIR /workspace
 
-#ENTRYPOINT ["/bin/bash"]
+CMD []
+ENTRYPOINT []
