@@ -8,7 +8,7 @@ on:
       - autogluon/**
 jobs:
   build:
-    runs-on: [ self-hosted, yandex, sber-automl-21-evaluator ]
+    runs-on: [ self-hosted, yandex, sber-automl-21-baselines ]
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       BASELINE: "autogluon"
