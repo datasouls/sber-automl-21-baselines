@@ -13,7 +13,9 @@ FROM base as builder
 
 WORKDIR /builds
 COPY requirements.txt /requirements.txt
-RUN pip install --prefix=/install -r /requirements.txt
+RUN pip --no-cache-dir install --upgrade --trusted-host pypi.org --trusted-host files.pythonhosted.org pip \
+ && pip --no-cache-dir install --upgrade wheel setuptools \
+ && pip --no-cache-dir install --prefix=/install -r /requirements.txt
 
 FROM base
 
