@@ -12,8 +12,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 FROM base as builder
 
 WORKDIR /builds
-
-WORKDIR /builds
 COPY requirements.txt /requirements.txt
 RUN pip install --prefix=/install -r /requirements.txt
 
@@ -22,4 +20,3 @@ FROM base
 COPY --from=builder /install /usr/local
 WORKDIR /workspace
 
-#ENTRYPOINT ["/bin/bash"]
