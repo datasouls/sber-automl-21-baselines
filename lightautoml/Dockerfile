@@ -1,4 +1,4 @@
-FROM debian:buster as base
+FROM python:3.8.12-buster as base
 
 LABEL PROJECT="Datasouls Competition: LAML"
 
