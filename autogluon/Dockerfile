@@ -1,6 +1,6 @@
 FROM python:3.8.12-buster as base
 
-LABEL PROJECT="Datasouls Competition: LAML"
+LABEL PROJECT="Datasouls Competition: Autogluon"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
   ffmpeg \
