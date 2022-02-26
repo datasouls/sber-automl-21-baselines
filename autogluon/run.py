@@ -27,7 +27,7 @@ def main():
     gluon_predictor.fit(
         train_data=train,
         time_limit=3600,
-        presets='best_quality'
+        #presets='best_quality'
     )
 
     if task_type == "binary":
