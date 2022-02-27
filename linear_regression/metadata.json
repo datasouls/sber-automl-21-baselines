@@ -1,4 +1,4 @@
 {
-  "image": "registry.datasouls.com/linear:latest",
+  "image": "registry.datasouls.com/linear_regression:latest",
   "entry_point": "python run.py"
 }
