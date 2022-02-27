@@ -1,4 +1,4 @@
 {
-  "image": "registry.datasouls.com/rf:0.0.1",
+  "image": "registry.datasouls.com/rf:latest",
   "entry_point": "python run.py"
 }

@@ -1,0 +1,52 @@
+name: "Build Baseline Image: Linear Regression"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+    paths:
+      - linear_regression/**
+jobs:
+  build:
+    runs-on: [ self-hosted, yandex, sber-automl-21-baselines ]
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      BASELINE: "linear_regression"
+      REGISTRY_NAME: "registry.datasouls.com"
+      TAG: "0.0.1"
+    steps:
+      - name: clean up workdir
+        run: |
+          echo "Cleaning up..."
+          rm -rf "${{ github.workspace }}" && mkdir -p "${{ github.workspace }}"
+
+      - uses: actions/checkout@v2
+
+      - name: build image
+        id: build_image
+        run: |
+          cd ./${BASELINE} &&\
+          docker build -t ${REGISTRY_NAME}/${BASELINE}:${TAG} . -f Dockerfile &&\
+          docker tag ${REGISTRY_NAME}/${BASELINE}:${TAG} ${REGISTRY_NAME}/${BASELINE}:latest
+
+      - name: Login to Datasouls Registry
+        id: login_to_datasouls_registry
+        uses: docker/login-action@v1
+        with:
+          registry: registry.datasouls.com/${BASELINE}
+          username: ${{ secrets.REGISTRY_PUSH_USERNAME }}
+          password: ${{ secrets.REGISTRY_PUSH_PASSWORD }}
+
+      - name: Push Images
+        id: push_images
+        run: |
+          docker push ${REGISTRY_NAME}/${BASELINE}:${TAG}
+          docker push ${REGISTRY_NAME}/${BASELINE}:latest
+
+      - name: notify slack
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#notify_builds'
+        if: always()

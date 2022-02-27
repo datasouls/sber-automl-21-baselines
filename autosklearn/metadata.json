@@ -1,4 +1,4 @@
 {
-  "image": "registry.datasouls.com/autosklearn:0.0.1",
+  "image": "registry.datasouls.com/autosklearn:latest",
   "entry_point": "python run.py"
 }

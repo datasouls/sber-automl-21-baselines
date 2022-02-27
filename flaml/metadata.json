@@ -1,4 +1,4 @@
 {
-  "image": "registry.datasouls.com/flaml:0.0.1",
+  "image": "registry.datasouls.com/flaml:latest",
   "entry_point": "python run.py"
 }

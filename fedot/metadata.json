@@ -1,4 +1,4 @@
 {
-  "image": "registry.datasouls.com/fedot:0.0.2",
-  "entry_point": "python run.py"
+  "image": "registry.hub.docker.com/niclnno/fedot_new:latest",
+  "entry_point": "python3 run.py"
 }

@@ -15,22 +15,24 @@ def main():
     target_col = list(set(train.columns) - set(test.columns))[0]
 
     if task_type in ["binary", "multiclass"]:
-        fedot_task_type = 'classification'
+        fedot_task_type = "classification"
     elif task_type == "reg":
-        fedot_task_type = 'regression'
+        fedot_task_type = "regression"
     else:
-        raise ValueError(f'Task {task_type} not supported')
+        raise ValueError(f"Task {task_type} not supported")
 
     automl = Fedot(problem=fedot_task_type, timeout=timeout)
     automl.fit(features=train_data, target=target_col)
-    y_pred = automl.predict_proba(features=test_data)
-
+    if fedot_task_type == "classification":
+        y_pred = automl.predict_proba(features=test_data)
+    else:
+        y_pred = automl.predict(features=test_data)
     if task_type == "binary":
-        y_pred = pd.DataFrame({target_col: y_pred})
+        y_pred = pd.DataFrame({target_col: y_pred.ravel()})
     elif task_type == "multiclass":
         y_pred = pd.DataFrame(y_pred)
     elif task_type == "reg":
-        y_pred = pd.DataFrame({target_col: y_pred})
+        y_pred = pd.DataFrame({target_col: y_pred.ravel()})
 
     y_pred.to_csv(output_path, index=None)
 
