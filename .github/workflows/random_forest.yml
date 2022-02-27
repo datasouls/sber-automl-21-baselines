@@ -11,7 +11,7 @@ jobs:
     runs-on: [ self-hosted, yandex, sber-automl-21-baselines ]
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      BASELINE: "random_forest"
+      BASELINE: "rf"
       REGISTRY_NAME: "registry.datasouls.com"
       TAG: "0.0.1"
     steps:
